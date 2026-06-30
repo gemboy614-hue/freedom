@@ -1,0 +1,10 @@
+# Local tooling / editor config
+.claude/
+
+# Dependencies (none used, but just in case)
+node_modules/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+*.log

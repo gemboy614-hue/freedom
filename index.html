@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Агентство недвижимости «ФРИДОМ» — недвижимость с понятной логикой</title>
+<meta name="description" content="ФРИДОМ — агентство недвижимости. Купить, продать, сдать или арендовать под ключ. 10 лет на рынке, полное юридическое сопровождение, честный подход. г. Находка." />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=Unbounded:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/css/style.css" />
+</head>
+<body>
+
+<!-- ░░░ CUSTOM CURSOR ░░░ -->
+<div class="cursor" id="cursor"><span class="cursor__label"></span></div>
+
+<!-- ░░░ PRELOADER ░░░ -->
+<div class="preloader" id="preloader">
+  <div class="preloader__inner">
+    <div class="preloader__logo">
+      <span>ФРИ</span><i class="slashes">///</i><span>ДОМ</span>
+    </div>
+    <div class="preloader__bar"><i id="preloaderFill"></i></div>
+  </div>
+  <div class="preloader__count"><span id="preloaderCount">0</span><b>%</b></div>
+</div>
+
+<!-- ░░░ PROGRESS BAR ░░░ -->
+<div class="scroll-progress"><i id="scrollProgress"></i></div>
+
+<!-- ░░░ HEADER ░░░ -->
+<header class="header" id="header">
+  <a href="#top" class="header__logo" data-cursor="К началу">
+    <span>ФРИ</span><i class="slashes">///</i><span>ДОМ</span>
+  </a>
+  <nav class="header__nav">
+    <a href="#contacts" class="header__cta" data-magnetic>Связаться</a>
+    <button class="burger" id="burger" aria-label="Меню"><i></i><i></i></button>
+  </nav>
+</header>
+
+<!-- ░░░ FULLSCREEN MENU ░░░ -->
+<div class="menu" id="menu">
+  <nav class="menu__nav">
+    <a href="#about" data-i="01"><span>О компании</span></a>
+    <a href="#help" data-i="02"><span>Кому помогаем</span></a>
+    <a href="#services" data-i="03"><span>Услуги</span></a>
+    <a href="#process" data-i="04"><span>Как работаем</span></a>
+    <a href="#team" data-i="05"><span>Команда</span></a>
+    <a href="#contacts" data-i="06"><span>Контакты</span></a>
+  </nav>
+  <div class="menu__foot">
+    <a href="tel:+79841894588">+7 984 189 45 88</a>
+    <a href="mailto:freedom_realty@mail.ru">freedom_realty@mail.ru</a>
+    <span>г. Находка, ул. Пограничная, 6, офис 306</span>
+  </div>
+</div>
+
+<main id="top">
+
+  <!-- ░░░ HERO — расходящийся логотип + лента изображений ░░░ -->
+  <section class="hero" id="hero">
+    <div class="hero__pin">
+      <div class="hero__wordmark">
+        <span class="hero__word hero__word--l" id="wordLeft">ФРИ</span>
+        <div class="hero__gap" id="heroGap"></div>
+        <span class="hero__word hero__word--r" id="wordRight">ДОМ</span>
+      </div>
+      <div class="hero__frame" id="heroFrame">
+        <div class="hero__slides" id="heroSlides">
+          <div class="hero__slide" style="--img:url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="hero__slide" style="--img:url('https://images.unsplash.com/photo-1600566753086-00f18fb6b3ea?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="hero__slide" style="--img:url('https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?auto=format&fit=crop&w=1400&q=80')"></div>
+          <div class="hero__slide" style="--img:url('https://images.unsplash.com/photo-1505691938895-1758d7feb511?auto=format&fit=crop&w=1400&q=80')"></div>
+        </div>
+        <i class="hero__frame-slash">///</i>
+      </div>
+      <div class="hero__tagline" id="heroTagline">
+        <p class="hero__kicker">Агентство недвижимости</p>
+        <p class="hero__sub">Покупка · продажа · аренда · инвестиции — под ключ,<br />с честной проверкой и сопровождением на каждом этапе.</p>
+        <div class="hero__actions">
+          <a href="#contacts" class="btn btn--solid" data-magnetic>Получить консультацию</a>
+          <a href="#services" class="btn btn--ghost" data-magnetic>Смотреть услуги</a>
+        </div>
+      </div>
+      <div class="hero__scrollhint"><span>Листайте</span><i></i></div>
+    </div>
+  </section>
+
+  <!-- ░░░ MARQUEE ░░░ -->
+  <div class="marquee" id="marquee">
+    <div class="marquee__track">
+      <span>Купить</span><b>·</b><span>Продать</span><b>·</b><span>Сдать</span><b>·</b><span>Арендовать</span><b>·</b><span>Инвестировать</span><b>·</b>
+      <span>Купить</span><b>·</b><span>Продать</span><b>·</b><span>Сдать</span><b>·</b><span>Арендовать</span><b>·</b><span>Инвестировать</span><b>·</b>
+    </div>
+  </div>
+
+  <!-- ░░░ ABOUT — фуллскрин фото + гигантский заголовок ░░░ -->
+  <section class="about" id="about">
+    <div class="about__media" data-parallax>
+      <div class="about__img" style="background-image:url('https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=2000&q=80')"></div>
+      <div class="about__overlay"></div>
+    </div>
+    <div class="about__statement">
+      <p>ФРИДОМ — недвижимость с понятной логикой и честным подходом. 10 лет на рынке, сотни успешных сделок и сопровождение от первого звонка до ключей.</p>
+    </div>
+    <h2 class="about__big" data-cursor="О нас"><span>О&nbsp;КОМПАНИИ</span></h2>
+  </section>
+
+  <!-- ░░░ MANIFESTO — заливка текста по скроллу ░░░ -->
+  <section class="manifesto" id="manifesto">
+    <p class="manifesto__kicker">Почему это важно</p>
+    <h2 class="manifesto__text" data-fill>
+      Недвижимость — слишком дорогая история, чтобы решать её наугад. Мы знаем, где сделка может «сломаться»: в документах, цене, ипотеке или деталях договора. Поэтому сначала разбираемся — и только потом действуем.
+    </h2>
+  </section>
+
+  <!-- ░░░ КОМУ МЫ ПОМОГАЕМ ░░░ -->
+  <section class="help" id="help">
+    <header class="sec-head">
+      <p class="sec-head__kicker"><i></i>Кому мы помогаем</p>
+      <h2 class="sec-head__title" data-words>Разные задачи — один внятный подход</h2>
+      <p class="sec-head__lead">К нам обращаются, когда нужно не «что-нибудь посмотреть», а разобраться, какой вариант действительно подходит по бюджету, срокам, документам и будущей выгоде.</p>
+    </header>
+    <div class="help__grid">
+      <article class="hcard" data-reveal>
+        <span class="hcard__num">01</span>
+        <h3>Покупателям</h3>
+        <p>Подберём квартиру, дом или коммерческое помещение под задачу, бюджет и реальные условия сделки.</p>
+      </article>
+      <article class="hcard" data-reveal>
+        <span class="hcard__num">02</span>
+        <h3>Продавцам</h3>
+        <p>Поможем подготовить объект, определить рыночную цену, упаковать предложение и провести переговоры без хаотичных показов.</p>
+      </article>
+      <article class="hcard" data-reveal>
+        <span class="hcard__num">03</span>
+        <h3>Арендодателям&nbsp;и арендаторам</h3>
+        <p>Найдём подходящий объект или надёжного арендатора, оформим договор и исключим неприятные сюрпризы.</p>
+      </article>
+      <article class="hcard" data-reveal>
+        <span class="hcard__num">04</span>
+        <h3>Инвесторам</h3>
+        <p>Подберём недвижимость с понятной логикой: ликвидность, спрос, потенциал роста, аренда или перепродажа.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ░░░ УСЛУГИ ░░░ -->
+  <section class="services" id="services">
+    <header class="sec-head">
+      <p class="sec-head__kicker"><i></i>Наши услуги</p>
+      <h2 class="sec-head__title" data-words>Полный цикл по недвижимости</h2>
+      <p class="sec-head__lead">От подбора объекта до финального оформления сделки. Работаем прозрачно и сопровождаем на каждом этапе.</p>
+    </header>
+    <ul class="services__list">
+      <li class="srv" data-reveal data-cursor="01">
+        <span class="srv__idx">01</span>
+        <h3 class="srv__name">Покупка недвижимости</h3>
+        <p class="srv__desc">Подбор объектов, проверка документов, переговоры, сопровождение сделки, помощь с ипотекой и оформлением.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+      <li class="srv" data-reveal data-cursor="02">
+        <span class="srv__idx">02</span>
+        <h3 class="srv__name">Продажа недвижимости</h3>
+        <p class="srv__desc">Оценка объекта, подготовка к продаже, стратегия продвижения, показы, переговоры и юридическое сопровождение.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+      <li class="srv" data-reveal data-cursor="03">
+        <span class="srv__idx">03</span>
+        <h3 class="srv__name">Новостройки</h3>
+        <p class="srv__desc">Подбор квартир от застройщиков без комиссии, сравнение ЖК, помощь с льготными ипотечными программами.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+      <li class="srv" data-reveal data-cursor="04">
+        <span class="srv__idx">04</span>
+        <h3 class="srv__name">Аренда</h3>
+        <p class="srv__desc">Поиск квартиры, дома, коммерческого помещения или арендатора. Проверка условий, договора и финансовых рисков.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+      <li class="srv" data-reveal data-cursor="05">
+        <span class="srv__idx">05</span>
+        <h3 class="srv__name">Коммерческая недвижимость</h3>
+        <p class="srv__desc">Подбор помещений для бизнеса с учётом локации, трафика, назначения и окупаемости.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+      <li class="srv" data-reveal data-cursor="06">
+        <span class="srv__idx">06</span>
+        <h3 class="srv__name">Юридическое сопровождение</h3>
+        <p class="srv__desc">Проверка документов, рисков, ограничений, условий договора и безопасности сделки.</p>
+        <span class="srv__arrow">↗</span>
+      </li>
+    </ul>
+  </section>
+
+  <!-- ░░░ КАК ПРОХОДИТ РАБОТА — пиннированная секция ░░░ -->
+  <section class="process" id="process">
+    <div class="process__head">
+      <p class="sec-head__kicker"><i></i>Как проходит работа</p>
+      <h2 class="process__title">Сначала<br />разбираемся.<br />Потом<br />действуем.</h2>
+      <p class="process__lead">Каждый этап — чёткий шаг к результату без лишних действий и скрытых условий.</p>
+    </div>
+    <div class="process__steps" id="processSteps">
+      <article class="pstep">
+        <span class="pstep__num">01</span>
+        <h3>Знакомство и задача</h3>
+        <p>Вы рассказываете, что хотите: купить, продать, сдать, арендовать или вложить деньги в недвижимость.</p>
+      </article>
+      <article class="pstep">
+        <span class="pstep__num">02</span>
+        <h3>Анализ ситуации</h3>
+        <p>Мы смотрим бюджет, сроки, документы, ипотечные условия, рынок и реальные варианты.</p>
+      </article>
+      <article class="pstep">
+        <span class="pstep__num">03</span>
+        <h3>Подбор или продажа</h3>
+        <p>Ищем объекты, готовим рекламу, проводим показы, ведём переговоры и отсеиваем слабые варианты.</p>
+      </article>
+      <article class="pstep">
+        <span class="pstep__num">04</span>
+        <h3>Сделка</h3>
+        <p>Проверяем документы, сопровождаем оформление и остаёмся рядом до результата.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ░░░ ПОЧЕМУ НАМ ДОВЕРЯЮТ ░░░ -->
+  <section class="trust" id="trust">
+    <div class="trust__quote" data-words>
+      «Опыт важен не сам по себе. Важно, сколько ошибок он помогает не совершить.»
+    </div>
+    <div class="trust__grid">
+      <article class="tcard" data-reveal>
+        <h3>10 лет на рынке</h3>
+        <p>Мы знаем, где сделка может «сломаться»: в документах, цене, ипотеке, переговорах или деталях договора.</p>
+      </article>
+      <article class="tcard" data-reveal>
+        <h3>Все форматы недвижимости</h3>
+        <p>Квартиры, дома, участки, коммерческие объекты, новостройки, аренда и инвестиционные варианты.</p>
+      </article>
+      <article class="tcard" data-reveal>
+        <h3>Смотрим шире объявления</h3>
+        <p>Цена, локация, ликвидность, документы, сроки, состояние объекта, условия сделки и будущая перепродажа.</p>
+      </article>
+      <article class="tcard" data-reveal>
+        <h3>Говорим прямо</h3>
+        <p>Если объект слабый или условия рискованны — скажем до сделки, а не после «поздравляем с покупкой».</p>
+      </article>
+    </div>
+    <div class="trust__stats">
+      <div class="stat" data-reveal><b data-count="10">0</b><span>лет на рынке</span></div>
+      <div class="stat" data-reveal><b data-count="500" data-suffix="+">0</b><span>успешных сделок</span></div>
+      <div class="stat" data-reveal><b data-count="15" data-suffix=" мин">0</b><span>ответ эксперта</span></div>
+      <div class="stat" data-reveal><b data-count="6">0</b><span>форматов недвижимости</span></div>
+    </div>
+  </section>
+
+  <!-- ░░░ КОМАНДА ░░░ -->
+  <section class="team" id="team">
+    <header class="sec-head">
+      <p class="sec-head__kicker"><i></i>Наша команда</p>
+      <h2 class="sec-head__title" data-words>Кто отвечает за вашу сделку</h2>
+      <p class="sec-head__lead">В недвижимости важна не просто «команда», а понимание, кто отвечает за подбор, переговоры, документы, ипотеку и финальное оформление.</p>
+    </header>
+    <div class="team__grid">
+      <article class="member" data-reveal data-cursor="+">
+        <div class="member__photo" style="background-image:url('https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="member__bar">
+          <h3>Екатерина Гладкова</h3>
+          <p>Руководитель агентства</p>
+        </div>
+        <div class="member__quote">«Моя задача — чтобы клиент не жалел о решении через год.»</div>
+      </article>
+      <article class="member" data-reveal data-cursor="+">
+        <div class="member__photo" style="background-image:url('https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="member__bar">
+          <h3>Екатерина Кузнецова</h3>
+          <p>Агент по вторичному рынку</p>
+        </div>
+        <div class="member__quote">«Показываю только то, что действительно подходит, а не всё подряд.»</div>
+      </article>
+      <article class="member" data-reveal data-cursor="+">
+        <div class="member__photo" style="background-image:url('https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="member__bar">
+          <h3>Людмила Мартынова</h3>
+          <p>Брокер по новостройкам</p>
+        </div>
+        <div class="member__quote">«Новостройка — это инвестиция в будущее, и нужно выбрать правильно.»</div>
+      </article>
+      <article class="member" data-reveal data-cursor="+">
+        <div class="member__photo" style="background-image:url('https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&w=900&q=80')"></div>
+        <div class="member__bar">
+          <h3>Виктория Кочеткова</h3>
+          <p>Юрист · ипотечный брокер</p>
+        </div>
+        <div class="member__quote">«Ипотека — это договор, который нужно понимать до подписи.»</div>
+      </article>
+    </div>
+  </section>
+
+  <!-- ░░░ ОТЗЫВЫ ░░░ -->
+  <section class="reviews" id="reviews">
+    <header class="sec-head">
+      <p class="sec-head__kicker"><i></i>Отзывы клиентов</p>
+      <h2 class="sec-head__title" data-words>Нам доверяют самое ценное — будущее</h2>
+    </header>
+    <div class="reviews__grid">
+      <figure class="review" data-reveal>
+        <blockquote>«Благодаря ФРИДОМ нашли квартиру мечты быстро и без стресса! Все документы проверены до мелочей. Огромное спасибо!»</blockquote>
+        <figcaption><b>Анастасия и Игорь</b><span>счастливые новосёлы</span></figcaption>
+      </figure>
+      <figure class="review" data-reveal>
+        <blockquote>«Продал дом в рекордные сроки и по отличной цене. Профессионализм и полное сопровождение — это про ФРИДОМ.»</blockquote>
+        <figcaption><b>Дмитрий С.</b><span>бывший владелец дома</span></figcaption>
+      </figure>
+      <figure class="review" data-reveal>
+        <blockquote>«Нашли идеальный офис для нашей компании. Виктория помогла с договором и всеми нюансами. Рекомендуем!»</blockquote>
+        <figcaption><b>Ольга П.</b><span>руководитель стартапа</span></figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <!-- ░░░ КОНТАКТЫ / ФУТЕР ░░░ -->
+  <section class="contacts" id="contacts">
+    <div class="contacts__top">
+      <div class="contacts__intro">
+        <h2 class="contacts__title" data-words>Каждая сделка начинается с разговора</h2>
+        <p class="contacts__lead">Мы разберём ситуацию, подскажем возможные варианты и объясним, с чего лучше начать. Первая консультация — бесплатно и без обязательств.</p>
+        <ul class="contacts__perks">
+          <li><i></i>Быстрый ответ в течение 15 минут</li>
+          <li><i></i>Живой разговор с экспертом</li>
+          <li><i></i>Опишите задачу — мы найдём варианты</li>
+        </ul>
+        <div class="contacts__details">
+          <a href="tel:+79841894588" data-magnetic><span>Телефон</span><b>+7 984 189 45 88</b></a>
+          <a href="mailto:freedom_realty@mail.ru" data-magnetic><span>Email</span><b>freedom_realty@mail.ru</b></a>
+          <div><span>Мессенджеры</span><b>WhatsApp · Telegram · Max</b></div>
+          <div><span>Офис</span><b>г. Находка, ул. Пограничная, 6, оф. 306</b></div>
+        </div>
+      </div>
+
+      <form class="contacts__form" id="callbackForm" novalidate>
+        <div class="field">
+          <input type="text" name="name" id="f-name" required placeholder=" " />
+          <label for="f-name">Как к вам обращаться</label>
+        </div>
+        <div class="field">
+          <input type="tel" name="phone" id="f-phone" required placeholder=" " />
+          <label for="f-phone">Телефон</label>
+        </div>
+        <div class="field">
+          <select name="topic" id="f-topic" required>
+            <option value="" selected disabled hidden></option>
+            <option>Купить</option>
+            <option>Продать</option>
+            <option>Сдать / арендовать</option>
+            <option>Новостройка</option>
+            <option>Инвестиции</option>
+            <option>Другое</option>
+          </select>
+          <label for="f-topic">Что вас интересует</label>
+        </div>
+        <div class="field">
+          <textarea name="message" id="f-message" rows="2" placeholder=" "></textarea>
+          <label for="f-message">Коротко о задаче</label>
+        </div>
+        <button type="submit" class="btn btn--solid btn--block" data-magnetic>
+          <span>Заказать звонок</span><i>↗</i>
+        </button>
+        <p class="contacts__note">Перезвоним в течение 30 минут. Без давления и обязательств.</p>
+      </form>
+    </div>
+
+    <div class="bigmark" id="bigmark" data-cursor="Наверх">
+      <span>ФРИ</span><i class="slashes">///</i><span>ДОМ</span>
+    </div>
+
+    <footer class="footer">
+      <nav class="footer__nav">
+        <a href="#about">О компании</a>
+        <a href="#services">Услуги</a>
+        <a href="#process">Как работаем</a>
+        <a href="#team">Команда</a>
+        <a href="#reviews">Отзывы</a>
+        <a href="#contacts">Контакты</a>
+      </nav>
+      <p class="footer__copy">© 2026 Агентство недвижимости «ФРИДОМ». Недвижимость с понятной логикой.</p>
+    </footer>
+  </section>
+
+</main>
+
+<!-- toast -->
+<div class="toast" id="toast"></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.min.js"></script>
+<script src="assets/js/main.js"></script>
+</body>
+</html>
