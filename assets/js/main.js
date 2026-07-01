@@ -135,7 +135,8 @@
       startSite();
 
       const tl = gsap.timeline({ onComplete: () => { if (preloader) preloader.style.display = 'none'; } });
-      tl.to('.preloader__logo', { y: -20, opacity: 0, duration: .5, ease: 'power2.in' }, 0)
+      tl.to('.preloader__mark', { y: -20, opacity: 0, duration: .5, ease: 'power2.in' }, 0)
+        .to('.preloader__logo', { y: -20, opacity: 0, duration: .5, ease: 'power2.in' }, 0)
         .to('.preloader__count', { y: 20, opacity: 0, duration: .5, ease: 'power2.in' }, 0)
         .to(preloader, { yPercent: -100, duration: .9, ease: 'expo.inOut' }, .2);
       // Hero entrance only on a fresh visit — on reload we lift straight onto
@@ -193,24 +194,24 @@
 
     if (reduce) return;
 
-    const slides = gsap.utils.toArray('.hero__slide');
+    // Image strip slides sideways on its own, independent of page scroll.
+    gsap.to('#heroSlides', { xPercent: -80, duration: 20, ease: 'none', repeat: -1 });
+
+    // On phones the pinned zoom covers half the scroll distance, so it
+    // finishes twice as fast as on desktop.
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: '.hero',
         start: 'top top',
-        end: '+=160%',
+        end: isTouch ? '+=80%' : '+=160%',
         scrub: 1,
         pin: '.hero__pin',
-        pinSpacing: true,
-        onUpdate(self) {
-          const idx = Math.min(slides.length - 1, Math.floor(self.progress * slides.length));
-          slides.forEach((s, i) => s.style.opacity = i === idx ? '1' : '0');
-        }
+        pinSpacing: true
       }
     });
-    const dist = isTouch ? 60 : 42;
-    tl.to('#wordLeft', { xPercent: -dist, ease: 'none' }, 0)
-      .to('#wordRight', { xPercent: dist, ease: 'none' }, 0)
+    const dist = isTouch ? 34 : 42;
+    tl.to('#wordLeft', { xPercent: -dist, opacity: 0, ease: 'none' }, 0)
+      .to('#wordRight', { xPercent: dist, opacity: 0, ease: 'none' }, 0)
       .to('#heroFrame', { scale: 1, borderRadius: 2, ease: 'none' }, 0)
       .to('#heroTagline', { opacity: 0, y: 30, ease: 'none', duration: .3 }, 0)
       .to('.hero__scrollhint', { opacity: 0, duration: .15 }, 0);
@@ -251,11 +252,11 @@
         scrollTrigger: { trigger: '.about', start: 'top bottom', end: 'bottom top', scrub: true }
       });
       gsap.from('.about__big span', {
-        yPercent: 110, ease: 'expo.out', duration: 1.2,
+        yPercent: 110, ease: 'expo.out', duration: 1.2, clearProps: 'transform',
         scrollTrigger: { trigger: '.about__big', start: 'top 85%' }
       });
       gsap.from('.about__statement', {
-        opacity: 0, y: 30, duration: 1,
+        opacity: 0, y: 30, duration: 1, clearProps: 'transform',
         scrollTrigger: { trigger: '.about__statement', start: 'top 85%' }
       });
     }
@@ -277,27 +278,37 @@
         // headline word rise
         words.forEach(w => { const s = document.createElement('span'); s.style.display = 'inline-block'; });
         gsap.from(words, {
-          yPercent: 120, opacity: 0, duration: .9, stagger: .04, ease: 'expo.out',
+          yPercent: 120, opacity: 0, duration: .9, stagger: .04, ease: 'expo.out', clearProps: 'transform',
           scrollTrigger: { trigger: el, start: 'top 88%' }
         });
       }
     });
 
-    /* generic reveals */
+    /* generic reveals — plain CSS transition toggled by a class (see the
+       [data-reveal].is-in rule in style.css) instead of GSAP tweening
+       `transform` directly, so the final state is transform:none and the
+       element stops trapping its z-index-promoted text below the header
+       logo (a lingering inline transform from a GSAP tween would otherwise
+       keep it stuck in its own stacking context). */
     if (!reduce) {
-      gsap.utils.toArray('[data-reveal]').forEach((el, i) => {
-        gsap.to(el, {
-          opacity: 1, y: 0, duration: 1, ease: 'expo.out',
-          scrollTrigger: { trigger: el, start: 'top 90%' }
-        });
-      });
-      /* batch stagger inside grids */
+      const inBatch = new Set();
       ['.help__grid', '.team__grid', '.reviews__grid', '.trust__stats'].forEach(sel => {
         const items = gsap.utils.toArray(sel + ' [data-reveal]');
+        items.forEach(el => inBatch.add(el));
         if (!items.length) return;
         ScrollTrigger.batch(items, {
           start: 'top 90%',
-          onEnter: b => gsap.to(b, { opacity: 1, y: 0, duration: 1, stagger: .1, ease: 'expo.out', overwrite: true })
+          onEnter: b => b.forEach((el, i) => {
+            el.style.transitionDelay = (i * 0.1) + 's';
+            el.classList.add('is-in');
+          })
+        });
+      });
+      gsap.utils.toArray('[data-reveal]').forEach(el => {
+        if (inBatch.has(el)) return;
+        ScrollTrigger.create({
+          trigger: el, start: 'top 90%', once: true,
+          onEnter: () => el.classList.add('is-in')
         });
       });
     }
@@ -306,7 +317,7 @@
     if (!reduce) {
       gsap.utils.toArray('.sec-head__kicker i').forEach(line => {
         gsap.from(line, {
-          scaleX: 0, transformOrigin: 'left', duration: .9, ease: 'expo.out',
+          scaleX: 0, transformOrigin: 'left', duration: .9, ease: 'expo.out', clearProps: 'transform',
           scrollTrigger: { trigger: line, start: 'top 92%' }
         });
       });
@@ -315,7 +326,7 @@
     /* PROCESS steps stagger */
     if (!reduce) {
       gsap.from('.pstep', {
-        y: 50, opacity: 0, duration: 1, stagger: .12, ease: 'expo.out',
+        y: 50, opacity: 0, duration: 1, stagger: .12, ease: 'expo.out', clearProps: 'transform',
         scrollTrigger: { trigger: '.process__steps', start: 'top 80%' }
       });
     }
@@ -334,11 +345,14 @@
       });
     });
 
-    /* big footer wordmark reveal */
-    if (!reduce) {
-      gsap.from('.bigmark span, .bigmark .slashes', {
-        yPercent: 110, opacity: 0, duration: 1.2, stagger: .08, ease: 'expo.out',
-        scrollTrigger: { trigger: '.bigmark', start: 'top 92%' }
+    /* big footer wordmark reveal — plain CSS transition toggled once, so it
+       can never get stuck mid-tween with a leftover transform offset the way
+       a scroll-scrubbed GSAP tween can when the page jumps/restores scroll. */
+    const bigmark = document.getElementById('bigmark');
+    if (bigmark) {
+      ScrollTrigger.create({
+        trigger: bigmark, start: 'top 92%', once: true,
+        onEnter: () => bigmark.classList.add('is-in')
       });
     }
   }

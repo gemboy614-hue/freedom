@@ -24,6 +24,13 @@
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
+
+/* Body copy always wins over the fixed header logo (z-index:1) if the two
+   ever occupy the same spot on scroll — cards/section backgrounds stay
+   beneath the logo, but the actual text inside them stacks above it.
+   :where() keeps this at zero specificity so it never fights a more
+   specific rule that already positions an element on purpose. */
+main :where(h1,h2,h3,h4,h5,h6,p,blockquote,li,b,figcaption,.hcard__num,.srv__idx,.pstep__num){position:relative;z-index:2}
 html{-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;scrollbar-gutter:stable}
 html.lenis,html.lenis body{height:auto}
 .lenis.lenis-smooth{scroll-behavior:auto!important}
@@ -69,6 +76,7 @@ a{color:inherit;text-decoration:none}
   display:flex;align-items:center;justify-content:center;flex-direction:column;
 }
 .preloader__inner{display:flex;flex-direction:column;align-items:center;gap:26px}
+.preloader__mark{width:clamp(56px,9vw,96px);height:auto;border-radius:14px;object-fit:cover}
 .preloader__logo{
   font-family:var(--font-d);font-weight:800;font-size:clamp(34px,7vw,82px);
   letter-spacing:-.02em;display:flex;align-items:center;line-height:1;
@@ -91,17 +99,23 @@ a{color:inherit;text-decoration:none}
 .scroll-progress i{display:block;height:100%;width:0;background:var(--red);box-shadow:0 0 12px var(--red)}
 
 /* ---------- HEADER ---------- */
-.header{
-  position:fixed;top:0;left:0;width:100%;z-index:6000;
-  display:flex;align-items:center;justify-content:space-between;
-  padding:24px var(--pad);mix-blend-mode:difference;color:#fff;
-}
+/* .header itself is not positioned: __logo and __nav are fixed independently
+   so the logo sits above section/card backgrounds but actual body copy
+   (headings, paragraphs, quotes, numbers…) still renders on top of it —
+   see the `main :where(...)` rule below — while the nav/burger (z-index:6000)
+   always stays on top of everything and clickable. */
 .header__logo{
+  position:fixed;top:24px;left:var(--pad);z-index:1;
+  mix-blend-mode:difference;color:#fff;
   font-family:var(--font-d);font-weight:800;font-size:22px;letter-spacing:-.02em;
   display:flex;align-items:center;line-height:1;
 }
 .header__logo .slashes{color:inherit;font-style:normal;margin:0 .04em;transform:skewX(-8deg);display:inline-block}
-.header__nav{display:flex;align-items:center;gap:26px}
+.header__nav{
+  position:fixed;top:24px;right:var(--pad);z-index:6000;
+  mix-blend-mode:difference;color:#fff;
+  display:flex;align-items:center;gap:26px;
+}
 .header__cta{
   font-weight:600;font-size:14px;text-transform:uppercase;letter-spacing:.04em;
   padding:11px 20px;border:1px solid currentColor;border-radius:40px;
@@ -160,12 +174,10 @@ a{color:inherit;text-decoration:none}
   overflow:hidden;border-radius:16px;
   will-change:transform;box-shadow:0 30px 80px rgba(0,0,0,.18);
 }
-.hero__slides{position:absolute;inset:0}
+.hero__slides{position:absolute;inset:0;display:flex;width:500%;height:100%;will-change:transform}
 .hero__slide{
-  position:absolute;inset:0;background-image:var(--img);background-size:cover;background-position:center;
-  opacity:0;transition:opacity .15s linear;
+  flex:0 0 20%;height:100%;background-image:var(--img);background-size:cover;background-position:center;
 }
-.hero__slide:first-child{opacity:1}
 .hero__frame-slash{
   position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
   color:#fff;font-style:normal;font-weight:700;font-size:clamp(16px,4.2vw,80px);mix-blend-mode:difference;
@@ -185,7 +197,12 @@ a{color:inherit;text-decoration:none}
 .hero__scrollhint i{width:1px;height:46px;background:var(--line);position:relative;overflow:hidden}
 .hero__scrollhint i::after{content:"";position:absolute;top:-50%;left:0;width:100%;height:50%;background:var(--red);animation:scrolldown 1.8s var(--e) infinite}
 @keyframes scrolldown{0%{top:-50%}100%{top:100%}}
-@media (max-width:680px){ .hero__scrollhint{display:none} .hero__tagline{bottom:4vh} }
+@media (max-width:680px){
+  .hero__scrollhint{display:none}
+  .hero__tagline{bottom:4vh}
+  .hero__wordmark{font-size:clamp(30px,11vw,80px)}
+  .hero__gap{width:clamp(76px,24vw,140px);height:clamp(76px,24vw,140px);margin:0 6px}
+}
 
 /* ---------- BUTTONS ---------- */
 .btn{
@@ -224,7 +241,11 @@ a{color:inherit;text-decoration:none}
   letter-spacing:-.03em;line-height:.82;color:#fff;white-space:nowrap;overflow:visible;
 }
 .about__big span{display:inline-block}
-@media (max-width:680px){ .about{height:100vh} .about__statement{top:auto;bottom:34vh;left:var(--pad);right:var(--pad);max-width:none} }
+@media (max-width:680px){
+  .about{height:100vh}
+  .about__statement{top:auto;bottom:34vh;left:var(--pad);right:var(--pad);max-width:none}
+  .about__big{font-size:clamp(30px,10vw,70px);white-space:normal}
+}
 
 /* ============================================================
    MANIFESTO (text fill on scroll)
@@ -308,6 +329,7 @@ a{color:inherit;text-decoration:none}
 .pstep h3{font-family:var(--font-d);font-weight:600;font-size:clamp(22px,2vw,32px);letter-spacing:-.02em;margin-bottom:14px}
 .pstep p{color:var(--ink-2);font-size:16px;max-width:42ch}
 @media (max-width:900px){ .process{grid-template-columns:1fr;gap:30px} .process__head{position:static} }
+@media (max-width:680px){ .services{padding:6vh 0} .process{padding:6vh var(--pad)} }
 
 /* ============================================================
    TRUST
@@ -413,10 +435,26 @@ a{color:inherit;text-decoration:none}
   font-size:clamp(60px,17vw,320px);display:flex;align-items:center;justify-content:center;
   padding:3vh var(--pad) 4vh;white-space:nowrap;cursor:none;
 }
-.bigmark .slashes{color:var(--red);font-style:normal;margin:0 .02em;transform:skewX(-8deg);display:inline-block}
-.bigmark span{display:inline-block;transition:transform .6s var(--e)}
+.bigmark .slashes{
+  color:var(--red);font-style:normal;margin:0 .02em;display:inline-block;
+  opacity:0;transform:skewX(-8deg) translateY(60%);
+  transition:transform .9s var(--e) .08s,opacity .9s var(--e) .08s;
+}
+.bigmark span{
+  display:inline-block;opacity:0;transform:translateY(60%);
+  transition:transform .9s var(--e),opacity .9s var(--e);
+}
+.bigmark span:last-child{transition-delay:.16s}
+.bigmark.is-in span,.bigmark.is-in .slashes{opacity:1}
+.bigmark.is-in span{transform:translateY(0)}
+.bigmark.is-in .slashes{transform:skewX(-8deg) translateY(0)}
 .bigmark:hover span:first-child{transform:translateX(-2%)}
 .bigmark:hover span:last-child{transform:translateX(2%)}
+@media (prefers-reduced-motion:reduce){
+  .bigmark span,.bigmark .slashes{opacity:1;transform:none;transition:none}
+  .bigmark .slashes{transform:skewX(-8deg)}
+}
+@media (max-width:680px){ .bigmark{font-size:clamp(22px,10.5vw,60px);padding:2vh var(--pad) 3vh} }
 
 .footer{max-width:var(--maxw);margin:0 auto;padding:30px var(--pad) 40px;border-top:1px solid #1c1c1c;display:flex;flex-wrap:wrap;justify-content:space-between;gap:18px;align-items:center}
 .footer__nav{display:flex;flex-wrap:wrap;gap:8px 26px}
@@ -435,7 +473,14 @@ a{color:inherit;text-decoration:none}
 .toast.is-show{transform:translate(-50%,0)}
 
 /* ---------- REVEAL BASE ---------- */
-[data-reveal]{opacity:0;transform:translateY(40px)}
+/* Plain CSS transition toggled by a class (see ScrollTrigger in main.js)
+   instead of GSAP tweening `transform` directly: once revealed, .is-in sets
+   transform:none, so the element stops forming its own stacking context and
+   z-index-promoted text (see the `main :where(...)` rule above) can still
+   stack above the fixed header logo. A leftover inline transform from a GSAP
+   tween would otherwise trap it. */
+[data-reveal]{opacity:0;transform:translateY(40px);transition:opacity 1s var(--e),transform 1s var(--e)}
+[data-reveal].is-in{opacity:1;transform:none}
 .word-line{display:inline-block;overflow:hidden;vertical-align:top}
 .word-line>span{display:inline-block;will-change:transform}
 
