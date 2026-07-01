@@ -1,0 +1,12 @@
+{
+  "name": "freedom-realty-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ФРИДОМ — лендинг агентства недвижимости со своим бэкендом для формы обратной связи (Resend)",
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "start": "node server.js"
+  }
+}

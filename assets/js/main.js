@@ -409,7 +409,7 @@
     clearTimeout(toast._t);
     toast._t = setTimeout(() => toast.classList.remove('is-show'), 3600);
   };
-  form?.addEventListener('submit', e => {
+  form?.addEventListener('submit', async e => {
     e.preventDefault();
     const name = form.name.value.trim();
     const phone = form.phone.value.trim();
@@ -417,8 +417,26 @@
       showToast('Заполните имя и телефон');
       return;
     }
-    showToast('Спасибо! Перезвоним в течение 30 минут');
-    form.reset();
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+    try {
+      const res = await fetch('/api/callback', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name, phone,
+          topic: form.topic.value.trim(),
+          message: form.message.value.trim()
+        })
+      });
+      if (!res.ok) throw new Error('request failed');
+      showToast('Спасибо! Перезвоним в течение 30 минут');
+      form.reset();
+    } catch (err) {
+      showToast('Не получилось отправить. Позвоните нам напрямую');
+    } finally {
+      submitBtn.disabled = false;
+    }
   });
 
 })();

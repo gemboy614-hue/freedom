@@ -2,24 +2,49 @@
 
 Лендинг агентства недвижимости «ФРИДОМ» (г. Находка).
 
-Статический сайт: HTML + CSS + JS, без сборки. Анимации — [GSAP ScrollTrigger](https://gsap.com/) + [Lenis](https://lenis.darkroom.engineering/) (плавный скролл), оба подключены через CDN. Шрифты Unbounded + Manrope.
+Фронтенд — статика: HTML + CSS + JS, без сборки. Анимации — [GSAP ScrollTrigger](https://gsap.com/) + [Lenis](https://lenis.darkroom.engineering/) (плавный скролл), оба подключены через CDN. Шрифты Unbounded + Manrope.
+
+Бэкенд — маленький Node.js-сервер (`server.js`, без внешних зависимостей),
+который отдаёт статику сайта и обслуживает форму обратной связи: письмо с
+именем, телефоном и вопросом клиента уходит на почту через [Resend](https://resend.com).
 
 **Живой сайт:** https://gemboy614-hue.github.io/freedom/
 
 ## Локальный запуск
 
 ```bash
+cp .env.example .env   # и вписать свой RESEND_API_KEY
 node server.js
 # → http://localhost:5599/
 ```
 
-Можно открыть `index.html` и напрямую — сервер нужен только для корректных MIME-типов.
+Без `.env`/`RESEND_API_KEY` сайт откроется нормально, но форма обратной связи будет отвечать ошибкой — письма отправлять некуда.
+
+## Настройка формы обратной связи (Resend)
+
+1. Зарегистрируйтесь на [resend.com](https://resend.com), возьмите API-ключ в **API Keys**.
+2. Скопируйте `.env.example` → `.env` и впишите:
+   - `RESEND_API_KEY` — ключ из Resend
+   - `MAIL_TO` — куда присылать заявки (сейчас `Saunerok@yandex.ru`)
+   - `MAIL_FROM` — можно оставить `onboarding@resend.dev` для проверки; после
+     подтверждения своего домена в Resend (**Domains** → добавить DNS-записи)
+     замените на адрес с вашего домена — так письма реже попадают в спам.
+3. `.env` в git не попадает (см. `.gitignore`) — на хостинге sweb положите
+   его рядом с `server.js` или задайте те же переменные через панель хостинга.
+
+## Деплой на sweb
+
+Sweb должен запускать Node.js-приложение командой `node server.js`
+(или `npm start`) и пробрасывать свой `PORT` — сервер уже читает
+`process.env.PORT`. Никаких дополнительных пакетов ставить не нужно:
+используется встроенный в Node ≥18 `fetch`.
 
 ## Структура
 
 ```
 index.html            # разметка
 assets/css/style.css  # стили
-assets/js/main.js     # анимации, прелоадер, скролл
-server.js             # минимальный статический сервер для локального превью
+assets/js/main.js     # анимации, прелоадер, скролл, отправка формы
+server.js             # статика + POST /api/callback (отправка письма через Resend)
+.env.example           # шаблон переменных окружения (скопировать в .env)
 ```
