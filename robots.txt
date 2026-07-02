@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://gemboy614-hue.github.io/freedom/sitemap.xml
+Sitemap: https://freedomnhk.ru/sitemap.xml
