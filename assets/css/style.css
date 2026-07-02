@@ -422,8 +422,12 @@ a{color:inherit;text-decoration:none}
 .contacts__messengers .msg-btn--wa:hover{background:#1fb959;border-color:#1fb959}
 .contacts__messengers .msg-btn--tg{background:#229ed9;border-color:#229ed9;color:#fff}
 .contacts__messengers .msg-btn--tg:hover{background:#1c87ba;border-color:#1c87ba}
+.contacts__messengers .msg-btn--max{background:linear-gradient(135deg,#33c6f4,#3b4cf6 55%,#a437e0);border-color:transparent;color:#fff}
+.contacts__messengers .msg-btn--max:hover{filter:brightness(1.1)}
 .contacts__messengers .msg-btn--farpost{background:#ff6600;border-color:#ff6600;color:#fff}
 .contacts__messengers .msg-btn--farpost:hover{background:#e05800;border-color:#e05800}
+.contacts__messengers .msg-btn--domclick{background:#06c799;border-color:#06c799;color:#fff}
+.contacts__messengers .msg-btn--domclick:hover{background:#05a781;border-color:#05a781}
 .msg-btn span{color:#fff}
 
 /* form */
