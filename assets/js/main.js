@@ -292,7 +292,7 @@
        keep it stuck in its own stacking context). */
     if (!reduce) {
       const inBatch = new Set();
-      ['.help__grid', '.team__grid', '.reviews__grid', '.trust__stats'].forEach(sel => {
+      ['.help__grid', '.team__grid', '.trust__stats'].forEach(sel => {
         const items = gsap.utils.toArray(sel + ' [data-reveal]');
         items.forEach(el => inBatch.add(el));
         if (!items.length) return;
@@ -397,6 +397,53 @@
       el.addEventListener('mouseleave', () => gsap.to(el, { x: 0, y: 0, duration: .6, ease: 'elastic.out(1,.4)' }));
     });
   }
+
+  /* ============================================================
+     REVIEWS SLIDER
+     ============================================================ */
+  (function initReviewsSlider() {
+    const track = document.getElementById('reviewsTrack');
+    if (!track) return;
+    const slides = [...track.children];
+    const dotsWrap = document.getElementById('reviewDots');
+    const prevBtn = document.getElementById('reviewPrev');
+    const nextBtn = document.getElementById('reviewNext');
+    let index = 0;
+
+    slides.forEach((_, i) => {
+      const dot = document.createElement('button');
+      dot.type = 'button';
+      dot.className = 'reviews__dot';
+      dot.setAttribute('aria-label', `Отзыв ${i + 1}`);
+      dot.addEventListener('click', () => goTo(i));
+      dotsWrap.appendChild(dot);
+    });
+    const dots = [...dotsWrap.children];
+
+    function render() {
+      track.style.transform = `translateX(-${index * 100}%)`;
+      dots.forEach((d, i) => d.classList.toggle('is-active', i === index));
+    }
+    function goTo(i) {
+      index = (i + slides.length) % slides.length;
+      render();
+    }
+
+    prevBtn.addEventListener('click', () => goTo(index - 1));
+    nextBtn.addEventListener('click', () => goTo(index + 1));
+
+    // swipe / drag support
+    let startX = null;
+    track.addEventListener('pointerdown', e => { startX = e.clientX; });
+    track.addEventListener('pointerup', e => {
+      if (startX === null) return;
+      const dx = e.clientX - startX;
+      if (Math.abs(dx) > 40) goTo(index + (dx < 0 ? 1 : -1));
+      startX = null;
+    });
+
+    render();
+  })();
 
   /* ============================================================
      FORM
