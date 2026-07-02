@@ -416,7 +416,8 @@ a{color:inherit;text-decoration:none}
   font-weight:600;font-size:14px;
   transition:background .35s var(--e),border-color .35s var(--e),transform .4s var(--e);
 }
-.msg-btn svg{width:20px;height:20px;flex:none;border-radius:6px}
+.msg-btn svg,.msg-btn img{width:20px;height:20px;flex:none;border-radius:6px;object-fit:contain}
+.contacts__messengers .msg-btn--domclick img{background:#fff;padding:3px;box-sizing:border-box}
 .msg-btn:hover{transform:translateY(-2px)}
 .contacts__messengers .msg-btn--wa{background:#25d366;border-color:#25d366;color:#fff}
 .contacts__messengers .msg-btn--wa:hover{background:#1fb959;border-color:#1fb959}
