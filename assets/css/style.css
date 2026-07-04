@@ -501,6 +501,14 @@ a{color:inherit;text-decoration:none}
 .footer__nav a{font-size:13px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);mix-blend-mode:difference}
 .footer__nav a:hover{color:#fff}
 .footer__copy{font-size:13px;color:var(--muted);mix-blend-mode:difference}
+.footer__credit{
+  display:inline-flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);
+  mix-blend-mode:difference;transition:color .3s;
+}
+.footer__credit span{text-transform:uppercase;letter-spacing:.04em;font-size:11px}
+.footer__credit img{width:20px;height:20px;border-radius:5px;flex:none}
+.footer__credit b{font-weight:700;color:inherit}
+.footer__credit:hover{color:#fff}
 @media (max-width:900px){ .contacts__top{grid-template-columns:1fr;gap:50px} .contacts__details{grid-template-columns:1fr 1fr} }
 @media (max-width:560px){ .contacts__details{grid-template-columns:1fr} }
 
