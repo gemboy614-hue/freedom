@@ -45,8 +45,24 @@ $html = '<h2>Новая заявка с сайта ФРИДОМ</h2>'
     . '<p><b>Интересует:</b> ' . htmlspecialchars($topic !== '' ? $topic : '—', ENT_QUOTES, 'UTF-8') . '</p>'
     . '<p><b>Сообщение:</b><br>' . nl2br(htmlspecialchars($message !== '' ? $message : '—', ENT_QUOTES, 'UTF-8')) . '</p>';
 
+// Resend requires the "from" display name to be ASCII or MIME-encoded
+// (RFC 2047) — a raw Cyrillic name like "ФРИДОМ <...>" gets rejected
+// with a 422 "non-ASCII characters" error otherwise.
+function encode_mail_from($raw) {
+    $raw = trim((string) $raw);
+    if (preg_match('/^(.*)<([^<>]+)>\s*$/', $raw, $m)) {
+        $displayName = trim($m[1]);
+        $email = trim($m[2]);
+        if ($displayName !== '' && preg_match('/[^\x20-\x7E]/', $displayName)) {
+            $displayName = '=?UTF-8?B?' . base64_encode($displayName) . '?=';
+        }
+        return $displayName !== '' ? "$displayName <$email>" : $email;
+    }
+    return $raw;
+}
+
 $payload = json_encode([
-    'from' => $config['MAIL_FROM'],
+    'from' => encode_mail_from($config['MAIL_FROM']),
     'to' => [$config['MAIL_TO']],
     'subject' => 'Заявка с сайта ФРИДОМ: ' . $name,
     'html' => $html,
