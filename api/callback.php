@@ -92,9 +92,12 @@ if (function_exists('curl_init')) {
 }
 
 if ($response === false || $status < 200 || $status >= 300) {
-    error_log('[api/callback] Resend error ' . $status . ': ' . ($requestError ?: $response));
+    $detail = $requestError ?: $response;
+    error_log('[api/callback] Resend error ' . $status . ': ' . $detail);
     http_response_code(502);
-    echo json_encode(['ok' => false, 'error' => 'send_failed']);
+    // TODO: временно возвращаем подробности в ответе для отладки 502 на sweb.
+    // Убрать поле "debug" из ответа, как только форма заработает нормально.
+    echo json_encode(['ok' => false, 'error' => 'send_failed', 'debug' => ['status' => $status, 'detail' => $detail]]);
     exit;
 }
 
