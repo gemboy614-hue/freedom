@@ -1,0 +1,9 @@
+# Принудительный редирект на HTTPS.
+# Работает и при прямом Apache-хостинге, и когда TLS терминируется на
+# прокси перед сервером (тогда порт всегда 80, а признак https приходит
+# в заголовке X-Forwarded-Proto — учитываем оба варианта).
+RewriteEngine on
+SetEnvIf X-Forwarded-Proto https SERVER_PORT=443
+SetEnvIf X-Forwarded-Proto https HTTPS=on
+RewriteCond %{HTTP:HTTPS} !=on [NC]
+RewriteRule ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [R=301,L]
